@@ -7,16 +7,16 @@
 class CParameterParser : public IParameterParser 
 {
 public:
-	typedef std::map<std::string,std::string> TParameterMap;
-	
+    typedef std::map<std::string,std::string> TParameterMap;
+    
 public:
-	CParameterParser();
-	virtual ~CParameterParser();
-	void SetParams( int argc, char* argv[] );
-	std::string GetParamValue( const std::string& ParamName );
-	
+    CParameterParser();
+    virtual ~CParameterParser();
+    void SetParams( int argc, char* argv[] );
+    std::string GetParamValue( const std::string& ParamName );
+    
 private:
-	TParameterMap 				m_Parameters;
+    TParameterMap                 m_Parameters;
 };
 
 #endif /*PARAMETERPARSER_H_*/

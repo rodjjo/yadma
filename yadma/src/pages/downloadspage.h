@@ -1,6 +1,8 @@
 #ifndef DOWNLOADSPAGE_H_
 #define DOWNLOADSPAGE_H_
 
+#include <string>
+#include <utility>
 #include "../util/yadmaptr.h"
 #include "../download/idownloadermanager.h"
 #include "../webserver/iwebserverlistener.h"
@@ -8,28 +10,27 @@
 class CDownloadsPage: public IWebServerListener
 {
 public:
-	CDownloadsPage( yadmaptr<IDownloaderManager> DownloadManager );
-	virtual ~CDownloadsPage();
-	void HandleRequest( struct mg_connection* conn, const struct mg_request_info* request_info );
-	
+    CDownloadsPage( yadmaptr<IDownloaderManager> DownloadManager );
+    virtual ~CDownloadsPage();
+    std::pair<int, std::string> HandleRequest( void *ev_data );
+
 private:
-	static void EnumStoppedInformation( void* UserData, const TDownloadInfo* Info );
-	static void EnumDownloadingInformation( void* UserData, yadmaptr<IDownload> DownloadInfo );
-	static void EnumRunningInformation( void* UserData, yadmaptr<IDownload> DownloadInfo );
-	
+    static std::string EnumStoppedInformation( const TDownloadInfo* Info );
+    static std::string EnumDownloadingInformation( yadmaptr<IDownload> DownloadInfo );
+    static std::string EnumRunningInformation( yadmaptr<IDownload> DownloadInfo );
+
 private:
-	std::string RemoveAds( const std::string& Url );
-	std::string GetVar( struct mg_connection* conn, const std::string& VarName );
-	bool ProcessDownloadInclusion( struct mg_connection* conn );
-	bool ProcessDownloadStop( struct mg_connection* conn );
-	bool ProcessDownloadResume( struct mg_connection* conn );
-	bool ProcessDownloadClearFinished( struct mg_connection* conn );
-	bool ProcessDownloadDelete( struct mg_connection* conn );
-	bool ProcessDownloadOrder( struct mg_connection* conn );
-	bool ProcessRunningInfo( struct mg_connection* conn );
-	
+    std::string RemoveAds( const std::string& Url );
+    std::string ProcessDownloadInclusion( void *ev_data );
+    std::string ProcessDownloadStop( void *ev_data );
+    std::string ProcessDownloadResume( void *ev_data );
+    std::string ProcessDownloadClearFinished( void *ev_data );
+    std::string ProcessDownloadDelete( void *ev_data );
+    std::string ProcessDownloadOrder( void *ev_data );
+    std::string ProcessRunningInfo( void *ev_data );
+
 private:
-	yadmaptr<IDownloaderManager> m_DownloadManager;
+    yadmaptr<IDownloaderManager> m_DownloadManager;
 };
 
 #endif /*DOWNLOADSPAGE_H_*/

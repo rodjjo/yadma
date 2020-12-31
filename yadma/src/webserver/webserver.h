@@ -5,8 +5,7 @@
 #include <map>
 #include <pthread.h>
 #include "../util/yadmaptr.h"
-#include <mongoose/mongoose.h>
-
+#include "mongoose.hpp"
 #include "iwebserver.h"
 #include "../settings/isettings.h"
 
@@ -15,24 +14,25 @@
 //-------------------------------------------------------------------------
 class CWebServer: public IWebServer
 {
-	typedef std::map<std::string, yadmaptr<IWebServerListener> > TListenerMap;
+    typedef std::map<std::string, yadmaptr<IWebServerListener> > TListenerMap;
 public:
-	CWebServer( yadmaptr<ISettings> Settings );
-	virtual ~CWebServer();
-	void AddListener( const std::string& Resource, yadmaptr<IWebServerListener> Listener );
-	bool Start();
-	void Stop();
-	
+    CWebServer( yadmaptr<ISettings> Settings );
+    virtual ~CWebServer();
+    void AddListener( const std::string& Resource, yadmaptr<IWebServerListener> Listener );
+
+protected:
+    void Run() override;
+
 private:
-	void RegisterCallBacks();
-	static void WebServerCallBack( struct mg_connection *conn, const struct mg_request_info *request_info, void *user_data );
-	
+    static void WebServerCallBack( struct mg_connection *c, int ev, void *ev_data, void *fn_data );
+    void HandleEvent(struct mg_connection *c, int ev, void *ev_data);
+
 private:
-	TListenerMap 												m_Listeners;
-	yadmaptr<ISettings> 										m_Settings;
-	struct mg_context* 											m_context; 
-	pthread_cond_t												m_StopCondition;
-	pthread_mutex_t												m_StopMutex;
+    TListenerMap m_Listeners;
+    yadmaptr<ISettings> m_Settings;
+    pthread_cond_t m_StopCondition;
+    pthread_mutex_t m_StopMutex;
+    struct mg_mgr   m_mgr;
 };
 
 #endif /*WEBSERVER_H_*/

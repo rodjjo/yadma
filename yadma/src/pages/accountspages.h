@@ -10,17 +10,17 @@
 class CAccountsPages: public IWebServerListener
 {
 public:
-	CAccountsPages( yadmaptr<IDataBase> DataBase, yadmaptr<IAutenticator> Autenticator );
-	virtual ~CAccountsPages();
-	void HandleRequest( struct mg_connection* conn, const struct mg_request_info* request_info );
-	
+    CAccountsPages( yadmaptr<IDataBase> DataBase, yadmaptr<IAutenticator> Autenticator );
+    virtual ~CAccountsPages();
+    std::pair<int, std::string> HandleRequest( void *ev_data );
+    
 private:
-	bool SaveAccount(struct mg_connection* conn );	
-	std::string GetParam( struct mg_connection* conn, const std::string& ParamName, bool& Found );
-	
+    bool SaveAccount( void *ev_data );    
+    std::string GetParam(  void *ev_data, const char *ParamName, bool& Found );
+    
 private:
-	yadmaptr<IDataBase> m_DataBase;	
-	yadmaptr<IAutenticator> m_Autenticator;	
-};	
+    yadmaptr<IDataBase> m_DataBase;    
+    yadmaptr<IAutenticator> m_Autenticator;    
+};    
 
 #endif /*ACCOUNTSPAGES_H_*/

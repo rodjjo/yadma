@@ -5,22 +5,18 @@
 //-----------------------------------------------------------------------------------------------------
 CFinishPage::CFinishPage( yadmaptr<IDownloaderManager> DownloadManager )
 {
-	m_DownloadManager = DownloadManager;
-} 
+    m_DownloadManager = DownloadManager;
+}
 
 //-----------------------------------------------------------------------------------------------------
 CFinishPage::~CFinishPage()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------------------------------------
-void CFinishPage::HandleRequest( struct mg_connection* conn, const struct mg_request_info* request_info )
+std::pair<int, std::string> CFinishPage::HandleRequest( void *ev_data )
 {
-	mg_printf( conn, "%s", PAGE_HEADER PAGE_HTML_BODY ); 
-	mg_printf( conn, "%s", "<br><br><br><center>yadma was finished...</center>" );
-	mg_printf( conn, "%s", PAGE_HTML_BOTTOM );
-	
-	m_DownloadManager->Stop();
+    return std::make_pair(200, PAGE_HTML_BODY "<br><br><br><center>yadma was finished...</center>");
+    m_DownloadManager->Stop();
 }
-

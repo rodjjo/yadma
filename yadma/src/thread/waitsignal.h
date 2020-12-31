@@ -8,14 +8,14 @@
 class CWaitSignal: public IWaitSignal
 {
 public:
-	CWaitSignal();
-	virtual ~CWaitSignal();
-	void Wait();
-	void Signal();
-	
+    CWaitSignal();
+    virtual ~CWaitSignal();
+    void Wait();
+    void Signal();
+    
 private:
-	pthread_cond_t			m_Condition;
-	pthread_mutex_t			m_Mutex;
+    pthread_cond_t            m_Condition;
+    pthread_mutex_t            m_Mutex;
 };
 
 #endif /*WAITSIGNAL_H_*/

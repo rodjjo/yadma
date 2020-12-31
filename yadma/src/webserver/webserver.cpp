@@ -1,100 +1,69 @@
 #include <stdio.h>
-#include <iostream> 
-#include <mongoose/mongoose.h>
+#include <iostream>
 #include "../pages/pagedefines.h"
 #include "../util/pathutil.h"
 #include "webserver.h"
 
+
 //----------------------------------------------------------------------------------
 CWebServer::CWebServer( yadmaptr<ISettings> Settings  )
 {
-	m_Settings 		= Settings;
-	m_context   	= NULL;
+    m_Settings = Settings;
 }
 
 //----------------------------------------------------------------------------------
 CWebServer::~CWebServer()
 {
-	Stop();
+    Stop();
 }
 
 //----------------------------------------------------------------------------------
-bool CWebServer::Start()
+void CWebServer::HandleEvent(struct mg_connection *c, int ev, void *ev_data)
 {
-	if( m_context == NULL )
-	{
-		m_context = mg_start();	
-		
-		if( m_context )
-		{
-			if( mg_set_option( m_context, "root", (GetAppDirectory() + "../www" ).c_str() ) == 1 )
-			{
-				RegisterCallBacks();
-				
-				if( mg_set_option( m_context, "ports", m_Settings->GetStrValue( "WEB_SERVER_PORT", "8080" ).c_str() ) == 1 )
-				{
-					return true;
-				}
-				else
-				{
-					fprintf( stderr, "Error: listening port %s", m_Settings->GetStrValue( "WEB_SERVER_PORT", "8080" ).c_str() );
-				}
-			}
-			else
-			{
-				fprintf( stderr, "Error: serving directory %s", (GetAppDirectory() + "../www/").c_str() ); 
-			}
-			
-			mg_stop( m_context );
-			m_context = NULL;	
-		}
-		else
-		{
-			fprintf( stderr, "Error: WebServer  context not initialized...." );	
-		}
-	}
-	
-	return false;
+    if (ev != MG_EV_HTTP_MSG) {
+        return;
+    }
+
+    struct mg_http_message *hm = (struct mg_http_message *) ev_data;
+    for( TListenerMap::iterator it = m_Listeners.begin(); it != m_Listeners.end(); it++ ) {
+        if (mg_http_match_uri(hm, it->first.c_str())) {
+            auto r = it->second->HandleRequest(ev_data);
+            mg_http_reply(c, r.first, "", "%s", r.second.c_str() );
+            return;
+        }
+    }
+    if (mg_http_match_uri(hm, "/") || mg_http_match_uri(hm, "/index.html") || mg_http_match_uri(hm, "/index.htm")) {
+        mg_http_serve_file(c, hm, (GetAppDirectory() + "../www/index.htm" ).c_str(), "text/html");
+        return;
+    }
+    mg_http_serve_dir(c, hm, (GetAppDirectory() + "../www" ).c_str());
 }
 
 //----------------------------------------------------------------------------------
-void CWebServer::Stop()
-{
-	if( m_context != NULL )
-	{
-		mg_stop( m_context );
-		m_context = NULL;	
-	}
+void CWebServer::Run() {
+    auto s_listen_on = std::string("https://0.0.0.0:") + m_Settings->GetStrValue( "WEB_SERVER_PORT", "8080" );
+    mg_mgr_init(&m_mgr);
+    mg_http_listen(&m_mgr, s_listen_on.c_str(), CWebServer::WebServerCallBack, this);
+    while (!StopRequested()) {
+        mg_mgr_poll(&m_mgr, 100);
+    }
+    mg_mgr_free(&m_mgr);
 }
+
 
 //----------------------------------------------------------------------------------
 void CWebServer::AddListener( const std::string& Resource, yadmaptr<IWebServerListener> Listener )
 {
-	if( m_context )
-	{
-		throw "WebServer: Impossivel adicionar listener, servidor rodando.";
-	}
-	
-	if( m_Listeners.find( Resource ) != m_Listeners.end() )
-	{
-		throw "WebServer: Listener ja incluido para este recurso."; 
-	}
-	
-	m_Listeners[ Resource ] = Listener; 
+    if( m_Listeners.find( Resource ) != m_Listeners.end() )
+    {
+        throw "WebServer: Listener ja incluido para este recurso.";
+    }
+
+    m_Listeners[ Resource ] = Listener;
 }
 
 //----------------------------------------------------------------------------------
-void  CWebServer::RegisterCallBacks()
+void CWebServer::WebServerCallBack( struct mg_connection *c, int ev, void *ev_data, void *fn_data )
 {
-	for( TListenerMap::iterator it = m_Listeners.begin(); it != m_Listeners.end(); it++ )
-	{
-		mg_set_uri_callback( m_context, it->first.c_str(), &CWebServer::WebServerCallBack, (void *) &it->second );
-	}
-}
-
-//----------------------------------------------------------------------------------
-void CWebServer::WebServerCallBack( struct mg_connection *conn, const struct mg_request_info *request_info, void *user_data )
-{
- 	yadmaptr<IWebServerListener>* Listener = ( yadmaptr<IWebServerListener>* ) user_data;
- 	(*Listener)->HandleRequest( conn, request_info );
+    ((CWebServer *) fn_data)->HandleEvent(c, ev, ev_data);
 }

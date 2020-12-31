@@ -7,31 +7,31 @@
 class CThread
 {
 public:
-	CThread();
-	
-	virtual ~CThread();
-	
-	bool IsRunning();
-	
-	bool Start();
-	
-	void Stop();
-	
-	bool StopRequested();
-	
+    CThread();
+    
+    virtual ~CThread();
+    
+    bool IsRunning();
+    
+    bool Start();
+    
+    void Stop();
+    
+    bool StopRequested();
+    
 protected:
-	virtual void Run() = 0;
-	
+    virtual void Run() = 0;
+    
 private:
-	void CleanUp();
-	static void* _Run( void* Object );
-	
+    void CleanUp();
+    static void* _Run( void* Object );
+    
 private:
-	bool 			m_Created;
-	bool 			m_Running;
-	bool 			m_Stopped;
-	pthread_attr_t 	m_attr;
-	pthread_t 		m_Thread;
+    bool             m_Created;
+    bool             m_Running;
+    bool             m_Stopped;
+    pthread_attr_t     m_attr;
+    pthread_t         m_Thread;
 };
 
 
