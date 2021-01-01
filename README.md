@@ -10,6 +10,19 @@ I fixed it and made It work again (2021).
 
 The Windows support is not ready yet.
 
+## Init
+
+```
+git submodule update --init --recursive
+```
+
+## Dependencies
+
+```bash
+sudo apt-get update
+sudo apt-get install build-essential cmake
+```
+
 ## Build
 
 This project requires cmake in order to build it
