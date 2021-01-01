@@ -1,1 +1,0 @@
-var yadmadirs = new Object();yadmadirs.getDirectory = function( storeFunction ){	var glb_window = $( "#glb_window2" ).html( "" );	glb_window.css( "display", "block" );}

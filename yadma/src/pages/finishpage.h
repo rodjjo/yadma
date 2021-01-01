@@ -8,12 +8,12 @@
 class CFinishPage: public IWebServerListener
 {
 public:
-	CFinishPage( yadmaptr<IDownloaderManager> DownloadManager );
-	virtual ~CFinishPage();
-	void HandleRequest( struct mg_connection* conn, const struct mg_request_info* request_info );
-	
+    CFinishPage( yadmaptr<IDownloaderManager> DownloadManager );
+    virtual ~CFinishPage();
+    std::pair<int, std::string> HandleRequest( void *ev_data );
+    
 private:
-	yadmaptr<IDownloaderManager> m_DownloadManager;
+    yadmaptr<IDownloaderManager> m_DownloadManager;
 };
 
 #endif /*FINISHPAGE_H_*/

@@ -8,17 +8,17 @@
 class CSettingsPage: public IWebServerListener
 {
 public:
-	CSettingsPage( yadmaptr<ISettings> Settings );
-	virtual ~CSettingsPage();
-	void HandleRequest( struct mg_connection* conn, const struct mg_request_info* request_info );
-	
+    CSettingsPage( yadmaptr<ISettings> Settings );
+    virtual ~CSettingsPage();
+    std::pair<int, std::string> HandleRequest( void *ev_data );;
+
 private:
-	void UpdateSetting( const std::string& InputName, const std::string& ConfigName, struct mg_connection* conn );
-	std::string GetSettingValue( const std::string& SettingName );
-	bool SaveSettings(struct mg_connection* conn );
-	
+    void UpdateSetting( const std::string& InputName, const std::string& ConfigName, void *ev_data );
+    std::string GetSettingValue( const std::string& SettingName );
+    std::string SaveSettings( void *ev_data );
+
 private:
-	yadmaptr<ISettings> m_Settings;
+    yadmaptr<ISettings> m_Settings;
 };
 
 

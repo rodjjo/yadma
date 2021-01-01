@@ -4,9 +4,9 @@
 class IWaitSignal
 {
 public:
-	virtual ~IWaitSignal(){};
-	virtual void Wait() 	= 0;
-	virtual void Signal() 	= 0;
+    virtual ~IWaitSignal(){};
+    virtual void Wait()     = 0;
+    virtual void Signal()     = 0;
 };
 
 #endif /*ISIGNALWAIT_H_*/

@@ -8,8 +8,8 @@
 class IDownloadFactory
 {
 public:
-	virtual ~IDownloadFactory(){};
-	virtual yadmaptr<IDownload> CreateDownload( int DownloadId ) = 0;
+    virtual ~IDownloadFactory(){};
+    virtual yadmaptr<IDownload> CreateDownload( int DownloadId ) = 0;
 };
 
 #endif /*IDOWNLOADFACTORY_H_*/

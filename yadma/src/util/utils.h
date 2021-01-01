@@ -1,10 +1,11 @@
 #ifndef UTILS_H_
 #define UTILS_H_
 
+#include <inttypes.h>
 #include <string>
 
-int StrToInt( const std::string& Value, bool* Error = (bool*)0 );
-std::string IntToStr( int Value );
+int64_t StrToInt( const std::string& Value, bool* Error = (bool*)0 );
+std::string IntToStr( int64_t Value );
 std::string CurrentDate();
 std::string CurrentTime();
 std::string Trim( const std::string& Value );

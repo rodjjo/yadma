@@ -1,0 +1,9 @@
+[submodule "yadma/third-party/curl"]
+	path = yadma/third-party/curl
+	url = https://github.com/curl/curl.git
+[submodule "yadma/third-party/mongoose"]
+	path = yadma/third-party/mongoose
+	url = https://github.com/cesanta/mongoose.git
+[submodule "yadma/third-party/sqlite"]
+	path = yadma/third-party/sqlite
+	url = https://github.com/alex85k/sqlite3-cmake

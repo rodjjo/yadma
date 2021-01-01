@@ -6,9 +6,9 @@
 class CAboutPage: public IWebServerListener
 {
 public:
-	CAboutPage();
-	virtual ~CAboutPage();
-	void HandleRequest( struct mg_connection* conn, const struct mg_request_info* request_info );
-};	
-	
+    CAboutPage();
+    virtual ~CAboutPage();
+     std::pair<int, std::string> HandleRequest( void *ev_data );
+};    
+    
 #endif /*ABOUTPAGE_H_*/
