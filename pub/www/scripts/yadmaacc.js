@@ -47,7 +47,7 @@ yadmaacc.deleteAccount = function()
 	{
 		if ( confirm( "delete account ?" ) )
 		{
-			yadma.get( "/yadma/accounts.html?delete=1&id=" + yadmaacc.Items[ yadmaacc.AccIndex ].Id );
+			yadma.get( "/yadma/accounts.txt?delete=1&id=" + yadmaacc.Items[ yadmaacc.AccIndex ].Id );
 			yadmaacc.AccIndex--;
 			yadmaacc.rebuildIt();
 		}
@@ -76,7 +76,7 @@ yadmaacc.saveAccount = function()
 		PostData = "id=" + yadmaacc.Items[ yadmaacc.AccIndex ].Id + "&" + PostData;
 	}
 	
-	var result = yadma.post( "/yadma/accounts.html", PostData );
+	var result = yadma.post( "/yadma/accounts.txt", PostData );
 	
 	if ( result.Success )
 	{
@@ -161,7 +161,7 @@ yadmaacc.showAccount  = function()
 //--------------------------------------------------------------------------------------
 yadmaacc.rebuildIt = function()
 {
-	var data = yadma.get( "/yadma/accounts.html" );
+	var data = yadma.get( "/yadma/accounts.txt" );
 
 	if( data.Success )
 	{

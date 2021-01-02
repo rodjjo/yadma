@@ -282,9 +282,9 @@ bool GetDownloadInfo( const std::string& Url, std::string& Cookie, std::string& 
 
     if ( Res )
     {
-
         Final               = Res->LastUrl;
         FileName            = Res->FileName;
+
         FileSize            = Res->FileSize;
         bool HasSucess      = Res->Sucess; // conseguindo nome ou tamanho do arquivo, indicar que houve sucesso
 

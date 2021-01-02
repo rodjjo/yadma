@@ -36,9 +36,9 @@ yadmaptr<IWebServer> CObjectContainer::GetWebServer()
     {
         m_WebServer = yadmaptr<IWebServer>( new CWebServer( GetSettings() ) );
         m_WebServer->AddListener( "/yadma/top.html", yadmaptr<IWebServerListener>( new CTopPage() ) );
-        m_WebServer->AddListener( "/yadma/downloads.html", yadmaptr<IWebServerListener>( new CDownloadsPage( GetDownloaderManager() ) ) );
-        m_WebServer->AddListener( "/yadma/settings.html", yadmaptr<IWebServerListener>( new CSettingsPage( GetSettings() ) ) );
-        m_WebServer->AddListener( "/yadma/accounts.html", yadmaptr<IWebServerListener>( new CAccountsPages( GetDataBase(), GetAutenticator() ) ) );
+        m_WebServer->AddListener( "/yadma/downloads.txt", yadmaptr<IWebServerListener>( new CDownloadsPage( GetDownloaderManager() ) ) );
+        m_WebServer->AddListener( "/yadma/settings.txt", yadmaptr<IWebServerListener>( new CSettingsPage( GetSettings() ) ) );
+        m_WebServer->AddListener( "/yadma/accounts.txt", yadmaptr<IWebServerListener>( new CAccountsPages( GetDataBase(), GetAutenticator() ) ) );
         m_WebServer->AddListener( "/stop.html", yadmaptr<IWebServerListener>( new CFinishPage( GetDownloaderManager() ) ) );
         m_WebServer->AddListener( "/yadma/about.html", yadmaptr<IWebServerListener>( new CAboutPage() ) );
         m_WebServer->AddListener( "/yadma/dirs.html", yadmaptr<IWebServerListener>( new CDirectoriesPages( GetSettings() ) ) );

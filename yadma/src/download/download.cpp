@@ -411,7 +411,7 @@ bool CDownload::GetDownloadInformation()
                     Directory += "/" +  m_Folder;
                 }
 
-                if ( !CreateDirectory( Directory ) )
+                if ( !MakeDirectory( Directory ) )
                 {
                     Directory = m_Settings->GetStrValue( "DOWNLOAD_DIRECTORY", "../downloads" );
                 }

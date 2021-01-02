@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <iostream>
 #include "dbquery.h"
 #include "database.h"
 #include "database_schema.h"
@@ -12,7 +13,8 @@ CDataBase::CDataBase( const std::string& DataBasePath  )
 
     if ( rc )
     {
-        fprintf(stderr, "Can't open database: %s (%s)\n", sqlite3_errmsg(m_db), DataBasePath.c_str() );
+        std::cout << "Can't open database: " << sqlite3_errmsg(m_db) << " " << DataBasePath.c_str() << std::endl;
+        std::cout << "Create the directory if it does not exist" << std::endl;
 
         sqlite3_close( m_db );
 

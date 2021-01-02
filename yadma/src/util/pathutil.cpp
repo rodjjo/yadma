@@ -1,7 +1,16 @@
+#ifdef WIN32
+
+#include <Windows.h>
+
+#else
+
 #include <errno.h>
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
+#endif  // WIN32
+
 #include <stdio.h>
 
 #include "utils.h"
@@ -10,6 +19,15 @@
 //----------------------------------------------------------
 std::string GetAppPath()
 {
+#ifdef WIN32
+    char path[MAX_PATH] = { 0, };
+    memset(path, 0, sizeof(path));
+    GetModuleFileNameA(NULL, path, MAX_PATH);
+    for (char *c = path; *c != 0; c++) {
+        if (*c == '\\') *c = '/';
+    }
+    return path;
+#else
     char szBuffer[512] = "";
     char szTmp[32] = "";
 
@@ -23,6 +41,7 @@ std::string GetAppPath()
     }
 
     return std::string( szBuffer, Size );
+#endif
 }
 
 //----------------------------------------------------------
@@ -84,23 +103,30 @@ bool FileExists( const std::string& FileName )
 }
 
 //----------------------------------------------------------
-bool CreateDirectory( const std::string& Directory )
+bool MakeDirectory( const std::string& Directory )
 {
+#ifdef WIN32
+    return CreateDirectoryA(Directory.c_str(), NULL) != 0;
+#else
     if ( mkdir( Directory.c_str(), S_IRWXU | S_IRWXG | S_IRWXO ) == 0 )
     {
         return true;
     }
 
     return ( errno == EEXIST );
+#endif
 }
 
 //----------------------------------------------------------
-bool RemoveDirectory( const std::string& Directory )
+bool DeleteDirectory( const std::string& Directory )
 {
+#ifdef WIN32
+    return RemoveDirectoryA(Directory.c_str()) != 0;
+#else
     if ( rmdir( Directory.c_str() ) == 0 )
     {
         return true;
     }
-
+#endif
     return false;
 }
