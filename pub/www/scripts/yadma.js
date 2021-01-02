@@ -66,7 +66,7 @@ yadma.parseTableData = function( Reference, Text )
 					nObject = new Object();
 				}
 
-                eval( "nObject." + Reference[i2].Name + " = '" + Row[1].replace( "/\'/g", "\'\'" )  + "'" );
+            nObject[Reference[i2].Name] = Row[1];
 
 				break;
 			}
@@ -263,7 +263,7 @@ yadma.stopDownload = function( Id )
 {
    if ( confirm("do you want to stop download ?") )
 	{
-	   yadma.get( "/yadma/downloads.html?stop=" + Id );
+	   yadma.get( "/yadma/downloads.txt?stop=" + Id );
       yadma.ListVersion         = -1;
    }
 }
@@ -271,7 +271,7 @@ yadma.stopDownload = function( Id )
 //------------------------------------------------------------------------------------------
 yadma.resumeDownload = function( Id )
 {
-   yadma.get( "/yadma/downloads.html?resume=" + Id );
+   yadma.get( "/yadma/downloads.txt?resume=" + Id );
    yadma.ListVersion         = -1;
 }
 
@@ -280,7 +280,7 @@ yadma.deleteDownload = function( Id )
 {
    if ( confirm("do you want to delete download ?") )
 	{
-		yadma.get( "/yadma/downloads.html?delete=" + Id );
+		yadma.get( "/yadma/downloads.txt?delete=" + Id );
 		yadma.ListVersion         = -1;
 	}
 }
@@ -290,7 +290,7 @@ yadma.clearDownload = function( Id )
 {
    if ( confirm("Clear command does not delete the file.\n Do you wanna to remove this download from list ?") )
 	{
-		yadma.get( "/yadma/downloads.html?clear=" + Id );
+		yadma.get( "/yadma/downloads.txt?clear=" + Id );
 		yadma.ListVersion         = -1;
 	}
 }
@@ -582,7 +582,7 @@ yadma.addDownloads = function()
 
    var params =  "links=" + urlencode( links ) + "&site=" + urlencode( site ) + "&folder=" + urlencode( folder );
 
-   yadma.post( "/yadma/downloads.html", params );
+   yadma.post( "/yadma/downloads.txt", params );
    yadma.ListVersion         = -1;
 }
 
@@ -731,7 +731,7 @@ yadma.startTimer = function()
 yadma.updateList = function()
 {
 
-    var LstVersion = parseInt( yadma.get( "/yadma/downloads.html?version=1" ).Data );
+    var LstVersion = parseInt( yadma.get( "/yadma/downloads.txt?version=1" ).Data );
 
     if ( isNaN( LstVersion ) )
     {
@@ -747,7 +747,7 @@ yadma.updateList = function()
 			yadma.DownPreviousTab.Filter = "";
 		}
 
-        dllist = yadma.get( "/yadma/downloads.html" );
+        dllist = yadma.get( "/yadma/downloads.txt" );
 
         if ( dllist.Success == true )
         {

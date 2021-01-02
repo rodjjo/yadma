@@ -1,6 +1,7 @@
 #ifndef UTILS_H_
 #define UTILS_H_
 
+#define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 #include <string>
 

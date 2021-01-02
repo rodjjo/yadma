@@ -122,7 +122,7 @@ std::string CDirectoriesPages::ProcessDirInclusion( void *ev_data )
 
         if( Name.find_first_of( ".." ) == std::string::npos )
         {
-            if ( CreateDirectory(  m_Settings->GetStrValue( "DOWNLOAD_DIRECTORY", "../downloads" ) + std::string("/") + Name ) )
+            if ( MakeDirectory(  m_Settings->GetStrValue( "DOWNLOAD_DIRECTORY", "../downloads" ) + std::string("/") + Name ) )
             {
                 return "ok";
             }
@@ -141,7 +141,7 @@ std::string CDirectoriesPages::ProcessDirExclusion(  void *ev_data )
 
         if( Name.find_first_of( ".." ) == std::string::npos )
         {
-            if ( RemoveDirectory( m_Settings->GetStrValue( "DOWNLOAD_DIRECTORY", "../downloads" ) + std::string("/") + Name ) )
+            if ( DeleteDirectory( m_Settings->GetStrValue( "DOWNLOAD_DIRECTORY", "../downloads" ) + std::string("/") + Name ) )
             {
                 return "ok";
             }

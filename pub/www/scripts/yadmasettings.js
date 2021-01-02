@@ -27,7 +27,7 @@ yadmasettings.showSettings = function( Settings )
 //--------------------------------------------------------------------------------------
 yadmasettings.rebuildIt = function()
 {
-	var data = yadma.get( "/yadma/settings.html" );
+	var data = yadma.get( "/yadma/settings.txt" );
 	if( data.Success )
 	{
 		var Settings = yadma.parseTableData( yadmasettings.SettingsHeaders, data.Data );
@@ -63,7 +63,7 @@ yadmasettings.saveSettings = function()
 	var ProxyHttps          = "n";
     var ProxActivate        = "n";
    
-    if ( yadma.post( "/yadma/settings.html", "server_name=" + urlencode( ServerName ) + "&server_port=" + urlencode( ServerPort ) 
+    if ( yadma.post( "/yadma/settings.txt", "server_name=" + urlencode( ServerName ) + "&server_port=" + urlencode( ServerPort ) 
                + "&down_dir=" + urlencode( DownloadDirectory ) + "&down_max=" + urlencode( DownloadMax )
                + "&proxy_addr=" + urlencode( ProxyAddr ) + "&proxy_port=" + urlencode( ProxyPort )  
                + "&proxy_activate=" + ProxActivate + "&proxy_https=" + ProxyHttps ).Success )

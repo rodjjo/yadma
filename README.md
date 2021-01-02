@@ -37,12 +37,20 @@ cmake .
 cmake --clean-first --build .
 ```
 
+Create the data directory
+```bash
+mkdir ./build/data
+```
+
 Running yadma
 ```bash
 ./build/bin/yadma
 ```
 
-Webserver based download manger
+## Usage
+
+The first thing you have to do before start the downloads is to enter the settings and define the download directory and other settings.
+
 
 ## What is YADMA ?
 

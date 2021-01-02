@@ -21,17 +21,30 @@ endif(WIN32)
 add_dependencies(yadma CURL)
 add_dependencies(yadma SQLITE)
 
+if(WIN32)
+target_link_libraries(yadma
+                      ${CMAKE_THREAD_LIBS_INIT}
+                      "sqlite3"
+                      "curl_imp"
+                      "ws2_32"
+                      ${CMAKE_DL_LIBS}
+                    )
+else(WIN32)
 target_link_libraries(yadma
                       ${CMAKE_THREAD_LIBS_INIT}
                       "sqlite3"
                       "curl"
                       ${CMAKE_DL_LIBS}
                     )
+endif(WIN32)
 
 
-
+if(WIN32)
+else(WIN32)
 SET_TARGET_PROPERTIES(yadma PROPERTIES LINKER_LANGUAGE C)
+endif(WIN32)
 
 install(TARGETS yadma
         RUNTIME DESTINATION bin
         COMPONENT runtime)
+
