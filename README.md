@@ -6,10 +6,6 @@ I fixed it and made It work again (2021).
 
 ![diagram](/docs/screenshot.png?raw=true "Screenshot")
 
-## Notes
-
-The Windows support is not ready yet.
-
 ## Init
 
 ```
@@ -45,6 +41,11 @@ mkdir ./build/data
 Running yadma
 ```bash
 ./build/bin/yadma
+```
+
+Running yadma on windows
+```bat
+.\build\bin\yadma.exe
 ```
 
 ## Usage
