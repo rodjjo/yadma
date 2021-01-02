@@ -20,7 +20,7 @@ sudo apt-get install build-essential cmake
 ```
 ## Windows users
 
-Download and extrac to somewhere the compiler tools [mingw64](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z/download).  
+Download and extract to somewhere the compiler tools [mingw64](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z/download).  
 
 Add the bin directory to your path environment variable.
 
